@@ -1,0 +1,4 @@
+ext {
+    APP_URL = "http://localhost:4040/"
+    USER_ID = "ee09bd39-4ca2-47ac-9c5e-9c57ba5a26dc"
+}
