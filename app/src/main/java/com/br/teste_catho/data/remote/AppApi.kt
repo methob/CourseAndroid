@@ -5,10 +5,7 @@ import com.br.teste_catho.data.remote.entity.Keys
 import com.br.teste_catho.data.remote.entity.Suggestion
 import com.br.teste_catho.data.remote.entity.Tips
 import com.br.teste_catho.data.remote.entity.User
-import com.br.teste_catho.data.remote.helper.ApiHelper
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.Path
 
 interface AppApi {

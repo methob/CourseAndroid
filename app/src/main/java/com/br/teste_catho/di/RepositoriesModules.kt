@@ -23,11 +23,11 @@ val repositories = module {
     single { RetrofitConfiguration().getAppRequest() }
     single { DatabaseConfiguration().createDatabase(androidContext()) }
 
-    factory<HomeLocalDataSource> { (layer: AppLayerDataBase) -> HomeLocalDataSourceImpl(layer.homeDao()) }
+    factory<HomeLocalDataSource> { HomeLocalDataSourceImpl(get<AppLayerDataBase>().homeDao() ) }
     factory<HomeRemoteDataSource> { HomeRemoteDataSourceImpl(get()) }
     factory<HomeRepository> { HomeRepositoryImpl(get(), get()) }
 
-    factory<SessionLocalDataSource> { (layer: AppLayerDataBase) -> SessionLocalDataSourceImpl(layer.sessionDao()) }
+    factory<SessionLocalDataSource> { SessionLocalDataSourceImpl(get<AppLayerDataBase>().sessionDao()) }
     factory<SessionRemoteDataSource> { SessionRemoteDataSourceImpl(get()) }
     factory<SessionRepository> { SessionRepositoryImpl(get(), get()) }
 }
