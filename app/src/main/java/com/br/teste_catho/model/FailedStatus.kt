@@ -1,7 +1,11 @@
 package com.br.teste_catho.model
 
-sealed class FailedStatus
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-class ApiError<T>(response: T): FailedStatus()
-object GenericError: FailedStatus()
-object NetworkError: FailedStatus()
+sealed class ErrorResponse
+
+@Parcelize
+data class RemoteError(val status: String, val message: String) : Parcelable
+object GenericError: ErrorResponse()
+object NetworkError: ErrorResponse()
