@@ -5,6 +5,6 @@ import com.br.teste_catho.data.remote.entity.Tips
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
-    fun getSuggestion(): Flow<Suggestion>
-    fun getTips(): Flow<Tips>
+    suspend fun getSuggestion(): Flow<Suggestion>
+    suspend fun getTips(): Flow<Tips>
 }

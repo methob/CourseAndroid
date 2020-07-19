@@ -5,7 +5,7 @@ import com.br.teste_catho.domain.repository.SessionRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetKeysUseCase(
-    private val sessionRepository: SessionRepository
-) : BaseUseCase<Any, Flow<Keys>>() {
-    override fun invoke(params: Any?): Flow<Keys> = sessionRepository.getKeys()
+    private val sessionRepository: SessionRepository) : BaseUseCase<Any, Flow<Keys>>() {
+
+    override suspend fun invoke(params: Any?): Flow<Keys> = sessionRepository.getKeys()
 }

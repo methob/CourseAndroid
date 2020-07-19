@@ -1,35 +1,27 @@
 package com.br.teste_catho.presentation.config
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.br.teste_catho.data.remote.entity.Keys
 import com.br.teste_catho.domain.usecase.GetKeysUseCase
+import com.br.teste_catho.domain.usecase.GetUserUseCase
 import com.br.teste_catho.helper.handleHttpError
 import com.br.teste_catho.model.ViewStatus
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.flatMapConcat
 
-class ConfigViewModel(private val getKeysUseCase: GetKeysUseCase): BaseViewModel() {
+class ConfigViewModel(private val getKeysUseCase: GetKeysUseCase,
+                      private val getUserUseCase: GetUserUseCase): BaseViewModel() {
 
-    var liveDataResponse: MutableLiveData<ViewStatus<Keys>> = MutableLiveData()
+    var liveDataResponse: MutableLiveData<ViewStatus> = MutableLiveData()
 
+    @FlowPreview
     @ExperimentalCoroutinesApi
-    fun getSessionInfo() {
-        viewModelScope.launch(backgroundContext) {
-            getKeysUseCase()
-                .handleHttpError {
-                    onHttpErrorCall {
-                        Log.d(it.message, it.status)
-                    }
-                    onGenericErrorCall {
-                        Log.d("SAUJSAS", "JOISAJOIAJOISa")
-                    }
-                }
-                .collect {
-                    Log.d(it.auth, "")
-                }
+    fun getSessionInfo() = viewModelScope.launch(backgroundContext) {
+        liveDataResponse.postValue(ViewStatus.Loading)
+        withContext(backgroundContext) { getKeysUseCase() }
+                .flatMapConcat {  withContext(backgroundContext) { getUserUseCase() } }
+                .handleHttpError { onHttpErrorCall { liveDataResponse.postValue(ViewStatus.Error(it))}}
+                .collect { liveDataResponse.postValue(ViewStatus.Success(it))}
         }
-    }
 }

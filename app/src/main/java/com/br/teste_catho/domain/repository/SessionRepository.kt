@@ -5,7 +5,6 @@ import com.br.teste_catho.data.remote.entity.User
 import kotlinx.coroutines.flow.Flow
 
 interface SessionRepository {
-
-    fun getKeys(): Flow<Keys>
-    fun getUser(): Flow<User>
+    suspend fun getKeys(): Flow<Keys>
+    suspend fun getUser(): Flow<User>
 }

@@ -6,6 +6,7 @@ import com.br.teste_catho.data.local.source.HomeLocalDataSource
 import com.br.teste_catho.data.local.source.HomeLocalDataSourceImpl
 import com.br.teste_catho.data.local.source.SessionLocalDataSource
 import com.br.teste_catho.data.local.source.SessionLocalDataSourceImpl
+import com.br.teste_catho.data.remote.HttpInterceptor
 import com.br.teste_catho.data.remote.RetrofitConfiguration
 import com.br.teste_catho.data.remote.source.HomeRemoteDataSource
 import com.br.teste_catho.data.remote.source.HomeRemoteDataSourceImpl
@@ -20,8 +21,10 @@ import org.koin.dsl.module.module
 
 val repositories = module {
 
-    single { RetrofitConfiguration().getAppRequest() }
+
     single { DatabaseConfiguration().createDatabase(androidContext()) }
+    single { HttpInterceptor(get()) }
+    single { RetrofitConfiguration(get()).getAppRequest() }
 
     factory<HomeLocalDataSource> { HomeLocalDataSourceImpl(get<AppLayerDataBase>().homeDao() ) }
     factory<HomeRemoteDataSource> { HomeRemoteDataSourceImpl(get()) }

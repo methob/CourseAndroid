@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "tb_user")
 data class UserTb (
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
-    val name : String = "",
-    val token : String = "",
-    val photo : String = ""
+    @PrimaryKey()
+    var id: String = "",
+    var name : String = "",
+    var token : String = "",
+    var photo : String = ""
 )

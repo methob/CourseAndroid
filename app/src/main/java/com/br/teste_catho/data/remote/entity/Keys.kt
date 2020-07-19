@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Keys(val auth : String = "",
-                val tips : String = "",
-                val suggestion : String = "",
-                val survey : String = ""): Parcelable
+data class Keys(var auth : String = "",
+                var tips : String = "",
+                var suggestion : String = "",
+                var survey : String = ""): Parcelable

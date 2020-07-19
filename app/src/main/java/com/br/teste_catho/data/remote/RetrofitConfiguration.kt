@@ -6,18 +6,17 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitConfiguration() {
+class RetrofitConfiguration(private val httpInterceptor: HttpInterceptor) {
 
     private fun getRetrofit() =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(OkHttpClient.Builder()
-
+                    .addInterceptor(httpInterceptor)
                     .addInterceptor(HttpLoggingInterceptor().apply {
                         level = HttpLoggingInterceptor.Level.BODY
-                    })
-                    .build())
+                    }).build())
             .build()
 
     fun getAppRequest(): AppApi = getRetrofit().create(AppApi::class.java)

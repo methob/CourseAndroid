@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class KeysTb (
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    val auth : String = "",
-    val tips : String = "",
-    val suggestion : String = "",
-    val survey : String = ""
+    var auth : String = "",
+    var tips : String = "",
+    var suggestion : String = "",
+    var survey : String = ""
 )

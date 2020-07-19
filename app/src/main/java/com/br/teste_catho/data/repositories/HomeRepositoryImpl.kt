@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 class HomeRepositoryImpl(private val homeRemoteDataSource: HomeRemoteDataSource,
                          private val homeLocalDataSource: HomeLocalDataSource): HomeRepository {
 
-    override fun getSuggestion(): Flow<Suggestion> {
+    override suspend fun getSuggestion(): Flow<Suggestion> {
         TODO("Not yet implemented")
     }
 
-    override fun getTips(): Flow<Tips> {
+    override suspend fun getTips(): Flow<Tips> {
         TODO("Not yet implemented")
     }
 

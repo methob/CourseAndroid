@@ -1,9 +1,10 @@
 package com.br.teste_catho.helper
 
-import com.br.teste_catho.model.GenericError
-import com.br.teste_catho.model.RemoteError
+import com.br.teste_catho.data.remote.entity.RemoteError
+import com.br.teste_catho.model.ViewError
 import com.br.teste_catho.presentation.config.BaseViewModel.CallError
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,19 +20,17 @@ fun <T> Flow<T>.handleHttpError(block: CallError.() -> Unit): Flow<T> =
             is HttpException -> {
                 call.block().apply {
                     error.response()?.errorBody()?.convertToRemoteError()?.let {
-                        call.invoke(it)
+                        call.invoke(it.toViewError())
                     }
                 }
             } else -> {
-                call.block().apply {
-                    call.invoke(GenericError)
-                }
+                call.block().apply { error.message?.let { call.invoke(ViewError(it)) } }
             }
         }
     }
 
 private fun ResponseBody.convertToRemoteError(): RemoteError {
-    val adapter = Gson().getAdapter(RemoteError::class.java)
-    return adapter.fromJson(this.toString())
+    val type = object : TypeToken<RemoteError>() {}.type
+    return Gson().fromJson(this.charStream(), type)
 }
 

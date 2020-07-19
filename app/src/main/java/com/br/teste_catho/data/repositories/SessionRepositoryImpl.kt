@@ -5,7 +5,6 @@ import com.br.teste_catho.data.remote.entity.Keys
 import com.br.teste_catho.data.remote.entity.User
 import com.br.teste_catho.data.remote.source.SessionRemoteDataSource
 import com.br.teste_catho.domain.repository.SessionRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -13,13 +12,15 @@ class SessionRepositoryImpl(private val sessionLocalDataSource: SessionLocalData
                             private val sessionRemoteDataSource: SessionRemoteDataSource)
     : SessionRepository {
 
-    @ExperimentalCoroutinesApi
-    override fun getKeys(): Flow<Keys> = flow {
+    override suspend fun getKeys(): Flow<Keys> = flow {
         val keys = sessionRemoteDataSource.getKeys()
+        sessionLocalDataSource.saveKeys(keys)
         emit(keys)
     }
 
-    override fun getUser(): Flow<User> = flow {
-        emit(sessionRemoteDataSource.getUser())
+    override suspend fun getUser(): Flow<User> = flow {
+        val user = sessionRemoteDataSource.getUser()
+        sessionLocalDataSource.saveUser(user)
+        emit(user)
     }
 }
