@@ -21,7 +21,6 @@ import org.koin.dsl.module.module
 
 val repositories = module {
 
-
     single { DatabaseConfiguration().createDatabase(androidContext()) }
     single { HttpInterceptor(get()) }
     single { RetrofitConfiguration(get()).getAppRequest() }

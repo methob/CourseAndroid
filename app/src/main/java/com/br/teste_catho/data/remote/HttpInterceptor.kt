@@ -1,12 +1,8 @@
 package com.br.teste_catho.data.remote
 
 import com.br.teste_catho.data.local.source.SessionLocalDataSource
-import com.br.teste_catho.data.remote.entity.Tips
 import com.br.teste_catho.data.remote.helper.SetAuthHeader
 import com.br.teste_catho.data.remote.helper.SetKeyHeader
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
@@ -53,6 +49,7 @@ class HttpInterceptor(private val dataSource: SessionLocalDataSource) : Intercep
         const val authorizationKey = "Authorization"
         const val AUTH = "auth"
         const val SUGGESTION = "suggestion"
+        const val SURVEY = "survey"
         const val TIPS = "tips"
     }
 }

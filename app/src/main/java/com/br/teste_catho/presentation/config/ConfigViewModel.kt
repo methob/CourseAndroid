@@ -15,13 +15,11 @@ class ConfigViewModel(private val getKeysUseCase: GetKeysUseCase,
 
     var liveDataResponse: MutableLiveData<ViewStatus> = MutableLiveData()
 
-    @FlowPreview
-    @ExperimentalCoroutinesApi
     fun getSessionInfo() = viewModelScope.launch(backgroundContext) {
         liveDataResponse.postValue(ViewStatus.Loading)
-        withContext(backgroundContext) { getKeysUseCase() }
-                .flatMapConcat {  withContext(backgroundContext) { getUserUseCase() } }
-                .handleHttpError { onHttpErrorCall { liveDataResponse.postValue(ViewStatus.Error(it))}}
-                .collect { liveDataResponse.postValue(ViewStatus.Success(it))}
+        getKeysUseCase()
+            .flatMapConcat { getUserUseCase() }
+            .handleHttpError { onHttpErrorCall { liveDataResponse.postValue(ViewStatus.Error(it))}}
+            .collect { liveDataResponse.postValue(ViewStatus.Success(it))}
         }
 }
