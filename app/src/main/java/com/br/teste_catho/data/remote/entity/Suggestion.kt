@@ -8,4 +8,4 @@ data class Suggestion(val jobAdTile : String = "",
                       val company : String = "",
                       val date : String = "",
                       val locations : MutableList<String>? = null,
-                      val salary: Salary): Parcelable
+                      val salary: Salary? = null): Parcelable

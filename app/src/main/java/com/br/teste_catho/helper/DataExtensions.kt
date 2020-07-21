@@ -2,7 +2,7 @@ package com.br.teste_catho.helper
 
 import com.br.teste_catho.data.remote.entity.RemoteError
 import com.br.teste_catho.model.ViewError
-import com.br.teste_catho.presentation.config.BaseViewModel.CallError
+import com.br.teste_catho.helper.BaseViewModel.CallError
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,4 +1,4 @@
-package com.br.teste_catho.presentation.config
+package com.br.teste_catho.helper
 
 import androidx.lifecycle.ViewModel
 import com.br.teste_catho.model.ViewError

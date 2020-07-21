@@ -1,4 +1,4 @@
 ext {
-    APP_URL = "http://192.168.0.10:4040/"
+    APP_URL = "http://192.168.15.5:4040/"
     USER_ID = "ee09bd39-4ca2-47ac-9c5e-9c57ba5a26dc"
 }

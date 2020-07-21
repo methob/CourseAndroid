@@ -7,7 +7,7 @@ import com.br.teste_catho.data.local.entity.SuggestionTb
 import com.br.teste_catho.data.local.entity.TipsTb
 import com.br.teste_catho.data.local.entity.UserTb
 
-@Database(version = 1, entities = [
+@Database(version = 2, entities = [
     KeysTb::class,
     SuggestionTb::class,
     TipsTb::class,

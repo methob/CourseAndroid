@@ -9,6 +9,7 @@ class DatabaseConfiguration {
         return Room
             .databaseBuilder(context, AppLayerDataBase::class.java,"JonathanApp.db")
             .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
             .build()
     }
 }
