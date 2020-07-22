@@ -1,6 +1,6 @@
 package com.br.teste_catho.presentation.home
 
-import android.graphics.Color
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,18 +25,13 @@ class SuggestionAdapter() : RecyclerView.Adapter<SuggestionAdapter.SuggestionsVi
 
     inner class SuggestionsViewHolder(private val binding: ItemViewSuggestionCarouselBinding)
         : RecyclerView.ViewHolder(binding.root) {
+
+        @SuppressLint("SetTextI18n")
         fun onBind(suggestion: Suggestion) {
-            when (suggestion.jobAdTile) {
-                "A" -> {
-                    binding.cardBora.setCardBackgroundColor(Color.RED)
-                }
-                "B" -> {
-                    binding.cardBora.setCardBackgroundColor(Color.BLACK)
-                }
-                else -> {
-                    binding.cardBora.setCardBackgroundColor(Color.WHITE)
-                }
-            }
+            binding.tvJobTitle.text = suggestion.jobAdTile
+            binding.tvDate.text = suggestion.date
+            binding.tvCompany.text = suggestion.company
+            binding.tvVacancies.text = "${suggestion.locations?.size} vagas"
         }
     }
 }

@@ -5,6 +5,6 @@ import com.br.teste_catho.data.remote.entity.Tips
 
 interface HomeRemoteDataSource {
 
-    suspend fun getSuggestions(): List<Suggestion>
-    suspend fun getTips(): List<Tips>
+    suspend fun getSuggestions(): MutableList<Suggestion>
+    suspend fun getTips(): MutableList<Tips>
 }

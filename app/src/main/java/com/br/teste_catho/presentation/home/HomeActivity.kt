@@ -5,10 +5,13 @@ import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.br.teste_catho.data.remote.entity.Suggestion
+import com.br.teste_catho.data.remote.entity.User
 import com.br.teste_catho.databinding.ActivityHomeBinding
+import com.br.teste_catho.model.ViewStatus
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -23,13 +26,24 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupViews()
+        setupObservers()
+        viewModel.getSuggestion()
+    }
+
+    private fun setupObservers() {
+        viewModel.liveDataResponse.observe(this, Observer { status ->
+            when(status) {
+                is ViewStatus.Success<*> -> {
+                    val suggestions = (status.response as MutableList<Suggestion>)
+                    pageAdapter.suggestions = suggestions as ArrayList<Suggestion>
+                    binding.vpSuggestions.adapter = pageAdapter
+                    TabLayoutMediator(binding.tabDots, binding.vpSuggestions) { _, _ -> }.attach()
+                }
+            }
+        })
     }
 
     private fun setupViews() {
-        pageAdapter.suggestions = arrayListOf(Suggestion(jobAdTile = "A"),
-            Suggestion(jobAdTile = "B"), Suggestion(jobAdTile = "C"))
-        binding.vpSuggestions.adapter = pageAdapter
-        TabLayoutMediator(binding.tabDots, binding.vpSuggestions) { _, _ -> }.attach()
         configureViewPage()
     }
 
@@ -58,6 +72,5 @@ class HomeActivity : AppCompatActivity() {
             outRect.right = horizontalMarginInPx
             outRect.left = horizontalMarginInPx
         }
-
     }
 }
