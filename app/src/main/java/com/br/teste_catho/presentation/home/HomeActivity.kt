@@ -1,5 +1,6 @@
 package com.br.teste_catho.presentation.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
@@ -8,9 +9,14 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import coil.api.load
+import coil.transform.CircleCropTransformation
+import com.br.teste_catho.BuildConfig
+import com.br.teste_catho.R
 import com.br.teste_catho.data.remote.entity.Suggestion
 import com.br.teste_catho.data.remote.entity.User
 import com.br.teste_catho.databinding.ActivityHomeBinding
+import com.br.teste_catho.model.Success
 import com.br.teste_catho.model.ViewStatus
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -33,9 +39,9 @@ class HomeActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.liveDataResponse.observe(this, Observer { status ->
             when(status) {
-                is ViewStatus.Success<*> -> {
-                    val suggestions = (status.response as MutableList<Suggestion>)
-                    pageAdapter.suggestions = suggestions as ArrayList<Suggestion>
+                is Success<MutableList<Suggestion>> -> {
+                    val suggestions = status.response
+                    pageAdapter.suggestions = suggestions
                     binding.vpSuggestions.adapter = pageAdapter
                     TabLayoutMediator(binding.tabDots, binding.vpSuggestions) { _, _ -> }.attach()
                 }
@@ -43,8 +49,17 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupViews() {
         configureViewPage()
+        intent.getParcelableExtra<User>(USER_ARG)?.let {
+            binding.imgUserPhoto
+                .load(BuildConfig.BASE_URL + it.photo.drop(DROP_FIRST_CHARACTER)) {
+                    placeholder(R.mipmap.ic_launcher)
+                    transformations(CircleCropTransformation())
+                }
+            binding.tvUserName.text = "Olá, ${it.name}"
+        }
     }
 
     private fun configureViewPage() {
@@ -72,5 +87,10 @@ class HomeActivity : AppCompatActivity() {
             outRect.right = horizontalMarginInPx
             outRect.left = horizontalMarginInPx
         }
+    }
+
+    companion object {
+        const val USER_ARG = "USER"
+        const val DROP_FIRST_CHARACTER = 1
     }
 }

@@ -9,8 +9,8 @@
     tools:context=".presentation.home.HomeActivity">
 
     <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/imgUserPhoto"
         android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
@@ -22,13 +22,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvUserName"
+        android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="@id/imgUserPhoto"
         app:layout_constraintBottom_toBottomOf="@id/imgUserPhoto"
-        android:text="Olá, Nome" />
+        tools:text="Olá, Nome" />
 
     <TextView
         android:layout_width="wrap_content"
