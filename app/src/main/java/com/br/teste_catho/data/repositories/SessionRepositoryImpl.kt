@@ -12,13 +12,13 @@ class SessionRepositoryImpl(private val sessionLocalDataSource: SessionLocalData
                             private val sessionRemoteDataSource: SessionRemoteDataSource)
     : SessionRepository {
 
-    override suspend fun getKeys(): Flow<Keys> = flow {
+    override suspend fun getKeys() = flow {
         val keys = sessionRemoteDataSource.getKeys()
         sessionLocalDataSource.saveKeys(keys)
         emit(keys)
     }
 
-    override suspend fun getUser(): Flow<User> = flow {
+    override suspend fun getUser() = flow {
         val user = sessionRemoteDataSource.getUser()
         sessionLocalDataSource.saveUser(user)
         emit(user)
